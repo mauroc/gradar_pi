@@ -101,6 +101,7 @@
 #include "gga.hpp"
 #include "GPwpl.hpp"
 #include "apb.hpp"
+#include "vhw.hpp"
 /*
 #include "ROT.hpp"
 #include "RPM.hpp"
@@ -112,7 +113,6 @@
 #include "TTM.hpp"
 #include "VBW.hpp"
 #include "VDR.hpp"
-#include "VHW.hpp"
 #include "VLW.hpp"
 #include "VPW.hpp"
 #include "VTG.hpp"
@@ -195,6 +195,7 @@ class NMEA0183
        GGA Gga;
        GPWPL GPwpl;
        APB Apb;
+       VHW Vhw;
  /*
       ROT Rot;
       RPM Rpm;
@@ -206,7 +207,6 @@ class NMEA0183
       TTM Ttm;
       VBW Vbw;
       VDR Vdr;
-      VHW Vhw;
       VLW Vlw;
       VPW Vpw;
       VTG Vtg;

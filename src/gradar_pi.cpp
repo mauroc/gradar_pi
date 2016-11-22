@@ -1577,6 +1577,31 @@ void gradar_pi::SetNMEASentence( wxString &sentence )
                     }
                }
           }
+
+          /* added to original to handle cases when HD* sentences are not available but VHW is (e.g. Raymarine e series MFD)*/
+          else if( m_NMEA0183.LastSentenceIDReceived == _T("VHW") ) {
+        	  if( m_NMEA0183.Parse() ) {
+                  if( mPriHeadingM >= 2 ) {
+                       if( !wxIsNaN(m_NMEA0183.Vhw.DegreesMagnetic) ){
+                            mPriHeadingM = 2;
+                            m_hdm = m_NMEA0183.Vhw.DegreesMagnetic;
+                            mHDx_Watchdog = gps_watchdog_timeout_ticks;
+                       }
+                       if( !wxIsNaN(m_NMEA0183.Vhw.DegreesMagnetic) ) {
+                            if( !wxIsNaN( m_var )  && (mPriHeadingT >= 3) ){
+                                 mPriHeadingT = 3;
+                                 g_hdt = m_hdm + m_var;
+                                 mHDT_Watchdog = gps_watchdog_timeout_ticks;
+                            }
+                       }
+                       if( !wxIsNaN(m_NMEA0183.Vhw.DegreesTrue) ){
+                           mPriHeadingT = 1;
+                           g_hdt = m_NMEA0183.Vhw.DegreesTrue;
+                           mHDT_Watchdog = gps_watchdog_timeout_ticks;
+                       }
+                  }
+        	  }
+          }
      }
 }
 
